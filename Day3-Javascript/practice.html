@@ -9,18 +9,20 @@
 
     <section>
         <h2>Age Group</h2>
+        <label for="age">Enter Age</label>
         <input type="number" name="age" id="age"/>
         <button type="button" id="age-btn">Submit</button>
-        <p id="age-msg"></p>
+        <p>Result: <span id="age-msg"></span></p>
     </section>
 
     <section>
         <h2>Test Result</h2>
+        <label for="">Enter Scores</label>
         <input type="number" name="score1" class="score">
         <input type="number" name="score2" class="score">
         <input type="number" name="score3" class="score">
         <button type="button" id="score-btn">Submit</button>
-        <p id="test-msg"></p>
+        <p>Result: <span id="test-msg"></span></p>
     </section>
 
     <script src="./practice.js"></script>
@@ -58,12 +60,8 @@
             if(!scoresHasBlank){
                 const {totalScores, message} = isPass(scores);
                 //console.log(message);
-                testMsgEle.textContent = `${message}.\nYour total scores is ${totalScores}`
+                testMsgEle.textContent = `${message} Your total scores is ${totalScores}`
             }
-
-            
-            console.log(scores)
-            console.log(scoresHasBlank)
         })
 
         

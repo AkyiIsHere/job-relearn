@@ -24,15 +24,23 @@ function ageGroup(age){
     }
 }
 
-function isPass(arr){
+function isPass(scores){
     let message;
-    const numArr = arr.map(Number);
-    // console.log(numArr);
-    const totalScores = numArr.reduce((acc,arr)=> acc+arr,0);
-    if(totalScores >= (arr.length*40)){
+    const passMark = 40;
+    const numericScores = scores.map(Number);
+    // console.log(numericScores);
+    
+    // const eachSubpass = numericScores.every(arr => arr >= 40);
+    const eachSubpass1 = numericScores.filter(score => score < passMark);
+    console.log(eachSubpass1);
+    const totalScores = numericScores.reduce((acc,score)=> acc+score,0);
+
+    if(eachSubpass1.length === 0 && totalScores >= (scores.length*passMark)){
         message = "You Passed!";
     } else {
-        message = "You Failed!";
+        const failedSubMsg = eachSubpass1.length === 1 ? "1 subject." : `${eachSubpass1.length} subjects.`
+        message = "You Failed cause you failed in " + failedSubMsg;
+
     }
     console.log(totalScores);
 
