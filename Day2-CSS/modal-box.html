@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Box</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .modal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .modal-container.open{
+            opacity: 1;
+             pointer-events: auto;
+        }
+
+        .modal-wrapper{
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            display: inline-block;
+        }
+
+        .close-btn{
+            font-size: 2.2rem;
+            color: red;
+           position: absolute;
+           right: -20px;
+           top:-40px;
+        }
+
+        .modal {
+            background: wheat;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: scale(0.95);
+            opacity: 0;
+        }
+
+        .modal-container.open .modal {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+       
+        @media (max-width:426px) {
+            body{
+                padding: 10px;
+            }
+
+            
+        }
+    </style>
+</head>
+<body>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, explicabo, a non est velit ab distinctio sapiente veritatis eligendi praesentium blanditiis itaque, ut alias aliquam accusamus nemo saepe recusandae? Debitis.</p>
+    <button onclick="openModal()">Open Modal</button>
+
+    <!-- Modal section -->
+     <section class="modal-container" id="modal-container">
+        <div class="modal-wrapper">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal" role="dialog" aria-modal="true" >
+                <h2>Modal Title</h2>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae, sequi.</p>
+                <button onclick="closeModal()">Close</button>
+            </div>
+        </div>
+     </section>
+
+
+     <script>
+        const modalContainer = document.getElementById("modal-container");
+        console.log(modalContainer.classList)
+        
+        function openModal(){
+            modalContainer.classList.add("open");
+             
+        }
+        
+        function closeModal(){
+            modalContainer.classList.remove("open");
+            console.log("close")
+        }
+
+        window.onclick = function(e){
+             console.log(e.target);
+
+            if(e.target === modalContainer){
+                console.log("true")
+                closeModal();
+            }
+        }
+
+        window.addEventListener("keydown", function (e) {
+            console.log(e.key)
+            if (e.key === "Escape") {
+                closeModal();
+            }
+        });
+     </script>
+</body>
+</html>

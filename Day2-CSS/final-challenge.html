@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Challenge</title>
+    <style>
+        *,*::before,*::after{
+            box-sizing: border-box;
+            margin: 0;
+            border: 0;
+        }
+
+        html{
+            scroll-behavior: smooth;
+        }
+
+        body{
+            background: #ccc;
+        }
+
+        section{
+            scroll-margin-top: 50px;
+        }
+
+        .navbar{
+            width: 100%;
+            height: 50px;
+            padding: 5px 16px;
+
+            display: flex;
+            align-items: center;
+            background-color: cadetblue;
+
+            position: sticky;
+            top:0;
+            
+        }
+        
+        .logo{
+            font-size: 1.4rem;
+            font-weight: bold;
+            flex: 1;
+        }
+        
+        .nav-links{
+            list-style: none;
+            flex-basis: 40%;
+            
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .nav-links a{
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover{
+            color: red;
+        }
+
+        .navbar .hamburger{
+            display: none;
+        }
+
+        main{
+             padding: 0 20px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links{
+                width: 100%;
+                background: midnightblue;
+                padding: 5px;
+
+                
+                flex-direction: column;
+                text-align: center;
+                gap: 5px;
+                
+                position: fixed;
+                left: 0;
+                top: 50px;
+                
+
+                opacity: 0;
+                transform: translateY(-10px);
+                pointer-events: none;
+                transition: all 100ms ease;
+                z-index: 1000;
+            }
+
+            .nav-links.on{
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+                
+            }
+
+            .nav-links li{
+                width: 100%;
+                border-bottom: 1px solid gray;
+                background: rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-links li a{         
+                display: block;
+
+            }
+
+            .navbar .hamburger{
+                display: block;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">MySite</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="hamburger">☰</button>
+    </header>
+    <main>
+            <section id="home">
+                <h2>Home</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio soluta reiciendis sunt unde nostrum ex eveniet nesciunt, exercitationem accusamus fuga repellat quibusdam dolor labore, iste autem tempore sed voluptatum officia mollitia. Maxime, voluptates. Dicta, sint quam distinctio beatae cum animi eveniet repellat quos, eaque vero quae unde quibusdam est at placeat! Dolores laboriosam at, impedit minima dignissimos assumenda illum in ipsum! Ducimus consequuntur soluta mollitia quaerat ea officiis libero a corporis nesciunt dignissimos maxime sit, illo, repudiandae, quod nam. Est sapiente adipisci animi soluta nobis eligendi optio aliquid unde et atque. Aliquam molestiae sapiente autem doloremque corrupti aperiam excepturi tenetur quasi labore dolores voluptas obcaecati sint ad, ullam reiciendis necessitatibus, minus eum similique omnis repellat delectus. A quas modi laudantium nobis vel corporis, cumque aperiam dolorum eaque natus nostrum. Inventore, similique! Provident cum reprehenderit unde libero omnis a minus iure dolorum iusto sequi, eius quaerat earum adipisci animi delectus molestias sapiente porro ab officia in ex accusantium. Laboriosam, ut maiores ex blanditiis aut illum dicta repellendus unde qui delectus sunt nemo doloremque ducimus ipsam ratione, totam quia adipisci consectetur. Rerum suscipit, fugit eos provident voluptate quo alias odit, architecto ullam assumenda doloremque consequuntur voluptatum tenetur, soluta a repellat est quibusdam?</p>
+            </section>
+            <section id="about">
+                <h2>About</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio soluta reiciendis sunt unde nostrum ex eveniet nesciunt, exercitationem accusamus fuga repellat quibusdam dolor labore, iste autem tempore sed voluptatum officia mollitia. Maxime, voluptates. Dicta, sint quam distinctio beatae cum animi eveniet repellat quos, eaque vero quae unde quibusdam est at placeat! Dolores laboriosam at, impedit minima dignissimos assumenda illum in ipsum! Ducimus consequuntur soluta mollitia quaerat ea officiis libero a corporis nesciunt dignissimos maxime sit, illo, repudiandae, quod nam. Est sapiente adipisci animi soluta nobis eligendi optio aliquid unde et atque. Aliquam molestiae sapiente autem doloremque corrupti aperiam excepturi tenetur quasi labore dolores voluptas obcaecati sint ad, ullam reiciendis necessitatibus, minus eum similique omnis repellat delectus. A quas modi laudantium nobis vel corporis, cumque aperiam dolorum eaque natus nostrum. Inventore, similique! Provident cum reprehenderit unde libero omnis a minus iure dolorum iusto sequi, eius quaerat earum adipisci animi delectus molestias sapiente porro ab officia in ex accusantium. Laboriosam, ut maiores ex blanditiis aut illum dicta repellendus unde qui delectus sunt nemo doloremque ducimus ipsam ratione, totam quia adipisci consectetur. Rerum suscipit, fugit eos provident voluptate quo alias odit, architecto ullam assumenda doloremque consequuntur voluptatum tenetur, soluta a repellat est quibusdam?</p>
+            </section>
+            <section id="services">
+                <h2>Services</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio soluta reiciendis sunt unde nostrum ex eveniet nesciunt, exercitationem accusamus fuga repellat quibusdam dolor labore, iste autem tempore sed voluptatum officia mollitia. Maxime, voluptates. Dicta, sint quam distinctio beatae cum animi eveniet repellat quos, eaque vero quae unde quibusdam est at placeat! Dolores laboriosam at, impedit minima dignissimos assumenda illum in ipsum! Ducimus consequuntur soluta mollitia quaerat ea officiis libero a corporis nesciunt dignissimos maxime sit, illo, repudiandae, quod nam. Est sapiente adipisci animi soluta nobis eligendi optio aliquid unde et atque. Aliquam molestiae sapiente autem doloremque corrupti aperiam excepturi tenetur quasi labore dolores voluptas obcaecati sint ad, ullam reiciendis necessitatibus, minus eum similique omnis repellat delectus. A quas modi laudantium nobis vel corporis, cumque aperiam dolorum eaque natus nostrum. Inventore, similique! Provident cum reprehenderit unde libero omnis a minus iure dolorum iusto sequi, eius quaerat earum adipisci animi delectus molestias sapiente porro ab officia in ex accusantium. Laboriosam, ut maiores ex blanditiis aut illum dicta repellendus unde qui delectus sunt nemo doloremque ducimus ipsam ratione, totam quia adipisci consectetur. Rerum suscipit, fugit eos provident voluptate quo alias odit, architecto ullam assumenda doloremque consequuntur voluptatum tenetur, soluta a repellat est quibusdam?</p>
+             </section>
+            <section id="contact">
+                <h2>Contact</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio soluta reiciendis sunt unde nostrum ex eveniet nesciunt, exercitationem accusamus fuga repellat quibusdam dolor labore, iste autem tempore sed voluptatum officia mollitia. Maxime, voluptates. Dicta, sint quam distinctio beatae cum animi eveniet repellat quos, eaque vero quae unde quibusdam est at placeat! Dolores laboriosam at, impedit minima dignissimos assumenda illum in ipsum! Ducimus consequuntur soluta mollitia quaerat ea officiis libero a corporis nesciunt dignissimos maxime sit, illo, repudiandae, quod nam. Est sapiente adipisci animi soluta nobis eligendi optio aliquid unde et atque. Aliquam molestiae sapiente autem doloremque corrupti aperiam excepturi tenetur quasi labore dolores voluptas obcaecati sint ad, ullam reiciendis necessitatibus, minus eum similique omnis repellat delectus. A quas modi laudantium nobis vel corporis, cumque aperiam dolorum eaque natus nostrum. Inventore, similique! Provident cum reprehenderit unde libero omnis a minus iure dolorum iusto sequi, eius quaerat earum adipisci animi delectus molestias sapiente porro ab officia in ex accusantium. Laboriosam, ut maiores ex blanditiis aut illum dicta repellendus unde qui delectus sunt nemo doloremque ducimus ipsam ratione, totam quia adipisci consectetur. Rerum suscipit, fugit eos provident voluptate quo alias odit, architecto ullam assumenda doloremque consequuntur voluptatum tenetur, soluta a repellat est quibusdam?</p>
+             </section>
+    </main>
+    </div>
+
+    <script>
+        const navLinks = document.querySelector(".nav-links");
+        const hamburger = document.querySelector(".hamburger");
+        const navLists = document.querySelectorAll(".nav-links li")
+
+        hamburger.addEventListener('click', burgerToggler);
+
+        function burgerToggler(){
+            navLinks.classList.toggle('on');
+            console.log('hi');
+        }
+
+        navLists.forEach(item => {
+            item.addEventListener('click', () => {
+                navLinks.classList.remove('on');
+            })
+        })
+    </script>
+</body>
+</html>

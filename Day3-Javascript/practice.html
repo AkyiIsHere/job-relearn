@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <section>
+        <h2>Age Group</h2>
+        <input type="number" name="age" id="age"/>
+        <button type="button" id="age-btn">Submit</button>
+        <p id="age-msg"></p>
+    </section>
+
+    <section>
+        <h2>Test Result</h2>
+        <input type="number" name="score1" class="score">
+        <input type="number" name="score2" class="score">
+        <input type="number" name="score3" class="score">
+        <button type="button" id="score-btn">Submit</button>
+        <p id="test-msg"></p>
+    </section>
+
+    <script src="./practice.js"></script>
+    <script>
+
+        //Age Group 
+        const ageInput = document.getElementById('age');
+        const ageBtn = document.getElementById('age-btn');
+        console.log(ageInput.value)
+        const ageMsgEle = document.getElementById("age-msg");
+        
+        ageBtn.addEventListener('click', ()=>{
+            const age = Number(ageInput.value);
+            if(isNaN(age)){
+                alert("Please enter a valid number");
+                return;
+            }
+            if(age){
+                const msg = ageGroup(age);
+                console.log(age)
+                console.log(msg);
+                ageMsgEle.textContent = msg;
+            }          
+        })
+        
+        //Test Result
+        const scoresEle = document.querySelectorAll('.score');
+        const scoreBtn = document.getElementById('score-btn')
+        const testMsgEle = document.getElementById("test-msg")
+        
+        scoreBtn.addEventListener('click',()=>{
+            const scores = [...scoresEle].map(score => score.value.trim());
+            const scoresHasBlank = hasBlank(scores);
+
+            if(!scoresHasBlank){
+                const {totalScores, message} = isPass(scores);
+                //console.log(message);
+                testMsgEle.textContent = `${message}.\nYour total scores is ${totalScores}`
+            }
+
+            
+            console.log(scores)
+            console.log(scoresHasBlank)
+        })
+
+        
+    </script>
+</body>
+</html>

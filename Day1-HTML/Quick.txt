@@ -1,0 +1,42 @@
+1.  Q - Difference between <section> and <div>
+    A - <section> can be considered as a bigger <div> and can be used when you have many section in a single page. <div> is more like a common grouper element.
+
+    Feedback - <div> has no sematic meaning. It's just a container.
+            <section> does have meaning. It defines a thematically grouped block of content - typically with a heading.
+
+2.  Q. When to use <article> instead of <section>
+    A. When I have an exact main content of the page.
+
+    Clarification - Use <article> when the content can stand alone - like blog posts, new articles or forum posts. It can appear inside <section> or <main> and each <article> should make sense even if you pull it out of the page.
+
+3.  Q. Which tag should you use for:
+        Navigation links?
+        Site logo?
+        The main content of the page?
+    A. Navigation links - <a> in the <nav>,
+       site logo- <a>,
+       main content of the page - <article>
+
+    Correction - Use <main> for main content of the page - not <article>. You can place <article> inside <main>, but <main> represents the primarty content section of your page.
+
+4.  Q. Difference between action and method in <form>
+    A. action is the file which contains the actions that need to be done when we submitted the form. method is the method we used to submit our files like get, post.
+
+    Minor refinement -  action: URL where the form is submitted (could be a PHP file, API endpoint, etc.)
+                        method: GET or POST (defines how data is sent)
+                                Get -> appends data to the URL(for searching, filtering)
+                                Post -> sends data in the request body (for sensitive data like passwords)
+                                
+
+5.  Q. Why use <label>
+    A. <label> indicate which input is for what
+
+    Bonus Info - Using <label> correctly improves: Accessibility (especially for screen readers) and Clickability - clicking on the label focuses the input field
+
+<div> - non-semantic
+<span> - non-semantic
+<nav> - sematic
+<nav> - sematic
+<aside> - sematic
+<b> - non-sematic
+<strong> - sematic

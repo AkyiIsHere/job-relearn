@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Layout</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+
+            height: 100vh;
+            background-color: black;
+            
+        }
+
+        .container{
+            width: 100%;
+            height: 100%;
+            background: grey;
+
+            display: grid;
+            
+            grid-template-areas:  
+            'header  header'
+            'main  aside'
+            'footer footer';
+            
+            grid-template-columns: 3fr 1fr;
+            grid-template-rows: auto 1fr auto;
+            gap: 5px;
+        }
+        header{
+            background-color: maroon;
+            grid-area: header;
+        }
+        main{
+            padding: 5px;
+            grid-area: main;
+        }
+        aside{
+            background-color: darkorchid;
+            grid-area: aside;
+        }
+        footer{
+            background-color: teal;
+            grid-area: footer;
+        }
+        
+        nav{
+            display: flex;
+            justify-content: space-between;
+            
+        }
+
+        nav > ul{
+            width: 30%;
+            list-style: none;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+
+            li{
+                background-color: white;
+                padding: 5px 8px;
+                border-radius: 5px;
+
+                a{
+                    text-decoration: none;
+                    color: black;
+                }
+            }
+        }
+
+
+        .logo{
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo > span {
+            font-size: 1.5rem;
+        }
+
+        article{
+            background: tan;
+        }
+
+        article h2{
+            margin: 20px 0 0;
+        }
+
+        article p{
+            margin: 0;
+        }
+        footer{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <a href="#" class="logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/RPC-JP_Logo.png" width="25px" alt="RPC logo">
+                    <span >Logo</span>
+                </a>
+
+                <ul class="nav-menu">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">News</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <article>
+                <h2>Blog Post 1</h2>
+                <em>uploaded on <time datetime="">11:00</time></em>
+                <figure>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/RPC-JP_Logo.png" alt="RPC logo" width="300">
+  <figcaption>Our official news logo.</figcaption>
+</figure>
+
+                <pp>This is a <mark>breaking news</mark> story with important updates.</p>>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero beatae debitis necessitatibus fugit eum explicabo excepturi itaque ipsum temporibus modi vel eveniet, odit tenetur perferendis distinctio inventore, culpa possimus fuga id cumque ipsam. Aspernatur quibusdam ea provident libero consequuntur ad repellendus adipisci impedit! Doloribus deleniti, dolor suscipit cumque odit veritatis?</p>
+            </article>
+            <article>
+                <h2>Blog Post 2</h2>
+                <em>uploaded on <time datetime="">12:00</time></em>
+                <blockquote>"Time and Tide wait for no men!"</blockquote>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero beatae debitis necessitatibus fugit eum explicabo excepturi itaque ipsum temporibus modi vel eveniet, odit tenetur perferendis distinctio inventore, culpa possimus fuga id cumque ipsam. Aspernatur quibusdam ea provident libero consequuntur ad repellendus adipisci impedit! Doloribus deleniti, dolor suscipit cumque odit veritatis?</p>
+            </article>
+            
+        </main>
+        <aside>
+                <h2>related Articles</h2>
+                <ul>
+                    <li><a href="#">Blog 1</a></li>
+                    <li><a href="#">Blog 2</a></li>
+                    <li><a href="#">Blog 3</a></li>
+                </ul>
+        </aside>
+        <footer>
+            &copy; 2025 Akyi. All rights served
+        </footer>
+    </div>
+</body>
+</html>

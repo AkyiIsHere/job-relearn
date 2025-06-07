@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Sidebar</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body{
+            margin: 0;
+            padding: 0;
+            background: gray;
+            color: white;
+        }
+
+        .navbar{
+            background: midnightblue;
+
+            padding: 5px 8px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            position: relative;
+        }
+
+        .logo{
+            font-size: 1.5rem;
+            flex: 1;
+        }
+
+        .nav-links{
+            list-style: none;
+
+            flex: 1;
+
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+        }
+
+        .hamburger{
+            display: none;
+        }
+
+        @media (max-width: 768px){
+            .nav-links{
+                flex-direction: column;
+
+                width: 100%;
+                background: cadetblue;
+                padding: 8px 0;
+
+                position: absolute;
+                left: 0;
+                top: 100%;
+
+                gap:4px;
+                z-index: 100;
+
+                visibility: hidden;
+                opacity: 0;
+                
+                transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+            }
+
+                    
+            .nav-links.on{
+                visibility: visible;
+                opacity: 1;
+                
+            }
+
+            .nav-links li{
+                width: 100%;
+                text-align: center;
+                background-color: maroon;
+            }
+
+            
+            .hamburger{
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">MySite</div>
+    <ul class="nav-links">
+      <li>Home</li>
+      <li>About</li>
+      <li>Services</li>
+      <li>Contact</li>
+    </ul>
+    <button class="hamburger" id="hamburger" onclick="buggerToggler()">
+      ☰
+    </button>
+  </nav>
+  <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae nulla accusantium explicabo modi, quibusdam maiores reprehenderit voluptas voluptatum aperiam incidunt facilis autem aliquam iusto dolor praesentium omnis natus numquam assumenda.</div>
+
+  <script>
+    const mediaQuery = window.matchMedia("(max-width:768px)");
+    const hamburger = document.getElementById("hamburger");
+    const navlinks = document.querySelector(".nav-links");
+
+    function buggerToggler(){
+        navlinks.classList.toggle("on");
+        console.log('hi')
+    }
+
+    // Optional: Close menu on link click in mobile
+    document.querySelectorAll(".nav-links li").forEach(link => {
+      link.addEventListener("click", () => {
+        if (window.innerWidth <= 768) {
+          navlinks.classList.remove("on");
+        }
+      });
+    });
+
+    /*mediaQuery.addEventListener('change', (e) => {
+        if(e.matches){
+            console.log("Enter mobile view")
+        } else {
+            console.log("false")
+        }
+    })
+
+    function buggerToggler(e){
+        if(e.matches){
+
+        }
+    }*/
+  </script>
+</body>
+</html>
