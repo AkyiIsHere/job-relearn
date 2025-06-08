@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body{
+            background-color: gray;
+        }
+
+        input{
+            width: 80px;
+            font-size: 1rem;
+            border: none;
+        }
+        
+        button{
+            padding: 8px 12px;
+            border: none;
+            color: white;
+            background: midnightblue;
+            border-radius: 5px;
+        }
+
+        .sign,select{
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        select > option > span{
+            color: red;
+        }
+        .result{
+            font-weight: bold;
+            font-size: 1rem;
+
+            color: midnightblue
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <h2>Mini Calculator</h2>
+        <input type="number" id="num1">
+        <select name="operator" id="operator">
+            <option value="+">+</option>
+            <option value="-">−</option>
+            <option value="*">×</option>
+            <option value="/">÷</option>
+        </select>
+        <input type="number" id="num2">
+        <span class="sign">=</span>
+        <span class="result" id="result">result</span>
+        <br/>
+        <button type="button" id="btn">Click to Calculate</button>
+    </section>
+
+    <script>
+        const btn = document.getElementById("btn");
+        const operators = {
+            "+": (num1,num2) => num1 + num2,
+            "-": (num1,num2) => num1 - num2,
+            "*": (num1,num2) => num1 * num2,
+            "/": (num1,num2) => num1 / num2,
+        }
+
+        btn.addEventListener("click",()=>{
+            const num1 = Number(document.getElementById("num1").value);
+            const num2 = +document.getElementById("num2").value;
+            const sign = document.getElementById('operator').value;
+
+            if(!isNaN(num1) && !isNaN(num2)){
+                
+                if(sign === "/" && num2 === 0){
+                    alert("Cannot divide by 0");
+                    return;
+                }
+
+                const result = calculate(num1,sign,num2);
+                document.getElementById("result").textContent = result.toFixed(2);
+            }else{
+                console.log('not working')
+            }
+
+        })
+
+        document.addEventListener('keydown', function(e){
+            if(e.key === "Enter"){
+                btn.click();
+            }
+        })
+
+        function calculate(num1,operator,num2){
+            
+            if(operators[operator]){
+                return result = operators[operator](num1,num2);
+            } 
+            return "Invalid operator"
+        }
+
+    </script>
+</body>
+</html>
