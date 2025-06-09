@@ -11,6 +11,7 @@ body{
 
 main{
     width: 50%;
+    min-width: 600px;
     background: rgba(152, 152, 152, 0.2);
     padding: 30px;
     margin: 0 auto;
@@ -30,8 +31,15 @@ main{
     margin-left: 30px;
 }
 
+.option.selected {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-left: 4px solid #0B1D51;
+    padding-left: 8px;
+    /* line-height: normal; */
+}
+
 input{
-    accent-color: #FFE3A9;
+    accent-color: #0B1D51;
 }
 
 label{
@@ -39,9 +47,21 @@ label{
 }
 
 .answer-container{
-    /* display: none;  */
+    display: none; 
     margin: 5px 0 0 15px;
     font-weight: bold;
+}
+
+.answer-container.on{
+    display: block;
+}
+
+.answer-container.on.true{
+    color: green;
+}
+
+.answer-container.on.false{
+    color: red;
 }
 
 footer{
@@ -60,16 +80,25 @@ footer #score-output{
     visibility: hidden;
 }
 
+#score-output.on{
+    visibility: visible;
+}
+
 .btn{
     background: #725CAD;
     color: white;
     font-weight: bold;
-
+    
     padding: 8px 18px;
     border: none;
     border-radius: 5px;
-
+    
     cursor: pointer;
+}
+
+.disabled{
+    background: gray;
+    cursor:not-allowed;
 }
 
 .btn:hover{
