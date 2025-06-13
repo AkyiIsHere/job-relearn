@@ -29,6 +29,8 @@ body{
 
 h1{
     color: white;
+    margin-top: 20px;
+    /* font-size: 1.6rem; */
 }
 
 .mini-features-container{
