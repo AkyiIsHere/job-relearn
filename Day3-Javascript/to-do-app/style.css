@@ -1,0 +1,178 @@
+*,*::before,*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    font-family: sans-serif;
+    background: rgb(70, 70, 70);
+}
+
+.container{
+    width: 60%;
+    min-width: 300px;
+    background: linear-gradient(150deg, #1CB5E0 0%, #000851 100%);
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.6);
+
+    margin: 10px auto;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+
+h1{
+    color: white;
+}
+
+.mini-features-container{
+    /* background: brown; */
+    border-radius: 5px;
+    
+    display: flex;
+    
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.mini-features-container .count-container{
+    /* background: indigo; */
+    color: white;
+    font-weight: 600;
+    font-size: .8rem;
+    
+    padding: 2px 8px;
+    margin-right: 5px;
+    border-radius: 5px 0 0 5px;
+}
+
+.count-container #count{
+    color: midnightblue;
+    background: white;
+    padding: 0px 6px;
+    border-radius: 2px;
+}
+
+.mini-features-container #deleteAllBtn{
+    background-color: red;
+    color: white;
+    padding: 2px 8px;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.input-container{
+    width: 90%;
+    height: 30px;
+    margin: 10px 0;
+    box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.4);
+
+    display: flex;
+
+}
+
+.input-container .task-input{
+    flex: 80%;
+    
+    padding-left: 8px;
+    border:none;
+    border-radius: 5px 0 0 5px;
+}
+
+.input-container .task-input:focus{
+    outline: none;
+}
+
+.input-container .add-btn{
+    flex: 20%;
+
+    border:none;
+    border-left: 1px solid black;
+    border-radius: 0 5px 5px 0;
+
+    cursor: pointer;
+}
+
+.add-btn:hover{
+    background: mediumblue;
+    color: white;
+}
+
+.task-list-container{
+    /* background: gray; */
+
+    width: 90%;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.task-list-container h2{
+    font-size: 1rem;
+    text-decoration: underline;
+    color: white;
+
+}
+
+/* Not fully supported in all browser */
+/* .task-list-container:has(ul > li) h2 {
+    display: block;
+}
+.task-list-container:has(ul > li){
+    display: block;
+} */
+
+
+.task-list{
+    
+    width: 90%;
+    margin: 0 auto;
+    
+    color: white;
+}
+
+.task-list li{
+    /* background: darkgrey; */
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid white;
+    margin-bottom: 8px;
+
+    position: relative;
+}
+
+ .task-list .icon-group{
+    display: flex;
+    gap: 4px;
+ }
+
+.task-list li .icon-btn{
+    background: none;
+    border: none;
+    padding: 0 8px;
+    cursor: pointer;
+}
+
+.trash-btn{
+    color: red;
+}
+
+.check-btn{
+    color: yellowgreen;
+}
+
+.retweet-btn{
+    color: orange;
+}
+
+.task-list.del li span{
+    text-decoration: line-through;
+}
+

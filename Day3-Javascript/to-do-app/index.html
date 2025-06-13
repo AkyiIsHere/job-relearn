@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple To-Do App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <section class="container">
+    <h1>To Do App</h1>
+
+    <div class="mini-features-container">
+      <div class="count-container">TASK <span id="count">1</span></div>
+      <button type="button" id="deleteAllBtn">Delete All</button>
+    </div>
+    
+    <div class="input-container">
+      <input type="text" id="taskInput" class="task-input" placeholder="Enter a task">
+      <button id="addBtn" class="add-btn">Add</button>
+    </div>
+
+    <div class="task-list-container">
+      <h2>Task Lists</h2>
+      <ul id="taskList" class="task-list">
+        <!-- tasks list -->
+      </ul>
+    </div>
+    
+    <div class="task-list-container">
+      <h2>Tasks Done</h2>
+      <ul id="doneTaskList" class="task-list del">
+        <!-- done tasks list -->       
+      </ul>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
