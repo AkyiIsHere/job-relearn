@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accordion</title>
+
+  <!-- Font Awesome for + / - icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Accordion</h1>
+    <div class="faq">
+      <div class="faq-item">
+        <h2 class="faq-question active">
+          <span>What is JavaScript?</span>
+        </h2>
+        <p class="faq-answer">
+          JavaScript is a programming language used for web development. It allows you to make pages interactive, like forms, animations, and dynamic updates.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h2 class="faq-question">
+          <span>What is the DOM?</span>
+        </h2>
+        <p class="faq-answer">
+          The DOM (Document Object Model) is a tree-like structure representing HTML elements in memory, which JavaScript can manipulate.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h2 class="faq-question">
+          <span>What are events in JS?</span>
+        </h2>
+        <p class="faq-answer">
+          Events are user interactions or browser triggers — like clicks, keypresses, or loads — that JavaScript can detect and respond to.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

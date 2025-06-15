@@ -26,5 +26,3 @@ A minimal and interactive to-do list application built with **HTML**, **CSS**, a
 - **Font Awesome** – for icons
 
 ---
-
-## 🗂️ Project Structure

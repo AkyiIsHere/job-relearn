@@ -19,6 +19,7 @@ tasks.forEach(task => {
     // console.log(task)
 });
 
+document.getElementById("taskInput").focus();
 
 //Add task Event Listener
 addBtn.addEventListener("click", addTask);
