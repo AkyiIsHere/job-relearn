@@ -78,7 +78,7 @@ body {
 .faq-answer {
   height: 0;
   overflow: hidden;
-  padding: 0 10px;
+  padding: 0px 10px;
   text-align: justify;
   transition: height 0.3s ease;
 }
