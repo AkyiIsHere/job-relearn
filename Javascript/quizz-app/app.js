@@ -91,6 +91,10 @@ document.getElementById("submit-btn").addEventListener("click",(e)=>{
     // Disable Btn after submit
     e.target.setAttribute('disabled',true);
     e.target.classList.add('disabled');
+    
+    //input disabled
+    const inputs = document.querySelectorAll("input[type=radio]");
+    inputs.forEach(input => input.disabled = true)
 })
 
 
@@ -102,7 +106,10 @@ document.getElementById("reset-btn").addEventListener("click", ()=>{
         answerContainer[x].classList.remove('on');
         answerContainer[x].classList.remove('true');
         answerContainer[x].classList.remove('false');
-        document.querySelector(`input[name="q${x}"]:checked`).parentElement.classList.remove("selected");
+        const checkedInput = document.querySelector(`input[name="q${x}"]:checked`);
+        if(checkedInput){
+            checkedInput.parentElement.classList.remove("selected");
+        }
     })
 
     document.querySelector('#score-output').classList.remove("on");
@@ -110,6 +117,10 @@ document.getElementById("reset-btn").addEventListener("click", ()=>{
     const submitBtn = document.getElementById("submit-btn");
     submitBtn.removeAttribute("disabled");
     submitBtn.classList.remove('disabled');
+
+     //input enabled
+    const inputs = document.querySelectorAll("input[type=radio]");
+    inputs.forEach(input => input.disabled = false)
 })
 
 function shuffle(array){
