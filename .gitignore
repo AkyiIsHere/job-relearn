@@ -1,0 +1,5 @@
+# Ignore Test folder inside Js
+Javascript/test/
+
+# Ignore styleT inside note-taking-app
+Javascript/note-taking-app/styleT.css

@@ -1,0 +1,280 @@
+:root {
+  --color1: #819a91;
+  --color2: #a7c1a8;
+  --color3: #d1d8be;
+  --color4: #eeefe0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color1);
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+}
+
+.nav-container {
+  flex: 0 0 0;
+  overflow: hidden;
+  max-width: 300px;
+  height: 100vh;
+
+  transition: flex 600ms;
+
+  z-index: 10;
+}
+
+.nav-container.active {
+  flex: 1 1 30%;
+}
+
+.nav {
+  width: 30%;
+  max-width: 300px;
+  height: 100%;
+  background: var(--color2);
+  padding: 10px 20px;
+
+  overflow: hidden;
+
+  position: fixed;
+
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all 600ms;
+}
+
+.nav.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.logo {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.new-btn {
+  width: 100%;
+  height: 32px;
+  background: var(--color1);
+  color: white;
+
+  font-weight: 700;
+
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.nav-menu {
+  list-style-type: none;
+}
+
+.nav-link {
+  width: 100%;
+  height: 30px;
+  background: var(--color1);
+  color: white;
+
+  text-decoration: none;
+  text-align: center;
+  line-height: 30px;
+  font-weight: 600;
+
+  margin-bottom: 6px;
+  border-radius: 5px;
+
+  display: inline-block;
+}
+
+.new-btn:hover,
+.nav-link:hover {
+  background: var(--color3);
+  cursor: pointer;
+}
+
+.menu-btn {
+  width: 20px;
+  height: 50px;
+  background: var(--color3);
+  color: white;
+  font-size: 1rem;
+
+  border: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 8px 8px 0;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); */
+
+  position: fixed;
+  left: 0;
+  top: 50%;
+
+  z-index: 11;
+
+  transform: translateY(-50%);
+  transition: left 600ms;
+}
+
+.arr-icon {
+  display: inline-block;
+
+  transform: rotate(0deg);
+  transform-origin: 50% 55%;
+  transition: all 600ms ease;
+}
+
+.arr-icon.active {
+  transform: rotate(180deg);
+}
+
+.main {
+  flex: 1 1 70%;
+}
+
+.note-title {
+  /* background: var(--color1); */
+  padding: 10px 30px 5px;
+
+  /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3); */
+
+  position: sticky;
+  top: 0;
+
+  z-index: 10;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* for z-index of child ele(.btn-container) to work. this will visiually added background over child ele */
+.note-title::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color1);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: -1;
+}
+
+.burger-btn {
+  display: none;
+
+  border: none;
+  background: none;
+  color: white;
+
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.btn {
+  padding: 6px 16px;
+  color: white;
+
+  font-weight: bold;
+
+  border: none;
+  border-radius: 4px;
+  margin-left: 4px;
+
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: var(--color3);
+  color: black;
+}
+
+.edit-btn {
+  /* background: #ff9f00; */
+  background: var(--color2);
+}
+
+.delete-btn {
+  background: #cb0404;
+}
+
+.note-content {
+  padding: 10px 50px;
+}
+
+@media screen and (max-width: 426px) {
+  .nav-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    width: 100vw;
+    max-width: none;
+  }
+
+  .nav-container.active {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .nav {
+    width: 60%;
+    opacity: 1;
+  }
+
+  .main {
+    flex: 1 1 100%;
+    font-size: 0.85rem;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
+
+  .burger-btn {
+    display: block;
+    cursor: pointer;
+  }
+
+  .btn-container {
+    position: fixed;
+    right: 0;
+    top: 50px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    width: 30%;
+    background: rgba(0, 0, 0, 0.5);
+
+    padding: 10px;
+    border-radius: 0 0 0px 5px;
+
+    transform: translateY(-100%);
+    z-index: -11;
+
+    transition: transform 600ms;
+  }
+  .btn-container.active {
+    transform: translateY(0);
+    /* z-index: 11; */
+  }
+
+  .btn {
+    font-size: 0.75rem;
+  }
+}
