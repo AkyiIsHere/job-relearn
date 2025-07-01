@@ -7,7 +7,6 @@
     navContainer: document.querySelector(".nav-container"),
     nav: document.getElementById("nav"),
     navMenu: document.getElementById("nav-menu"),
-    navLinks: document.querySelectorAll(".nav-link"),
     arrIcon: document.querySelector(".arr-icon"),
     burgerBtn: document.querySelector(".burger-btn"),
     btnContainer: document.querySelector(".btn-container"),
@@ -21,6 +20,8 @@
     noteTitle: document.getElementById("note-title"),
     noteSubTitle: document.getElementById("sub-title"),
     noteBody: document.getElementById("note-body"),
+    noteEditBtn: document.getElementById("note-edit"),
+    noteDeleteBtn: document.getElementById("note-delete"),
   };
 
   // --- Constants ---
@@ -60,6 +61,10 @@
     });
   }
 
+  function isSmallScreen() {
+    return window.innerWidth <= SMALL_SCREEN_BREAKPOINT;
+  }
+
   // --- Navigation Functions ---
 
   function toggleNav(e) {
@@ -95,13 +100,13 @@
   }
 
   function closeNavHandler(e) {
-    const isSmallScreen = window.innerWidth <= SMALL_SCREEN_BREAKPOINT;
+    // const isSmallScreen = window.innerWidth <= SMALL_SCREEN_BREAKPOINT;
     const clickedOutside =
       !elements.nav.contains(e.target) &&
       e.target !== elements.menuBtn &&
       e.target !== elements.arrIcon;
 
-    if (isSmallScreen && clickedOutside) {
+    if (isSmallScreen() && clickedOutside) {
       closeNav();
     }
   }
@@ -154,6 +159,7 @@
     elements.newBtn.addEventListener("click", openNewForm);
     elements.cancelBtn.addEventListener("click", closeNewForm);
     elements.form.addEventListener("submit", noteFormSubmit);
+    elements.noteDeleteBtn.addEventListener("click", deleteNote);
 
     noteListInitialization(); // Initalize note lists from localstorage
     setupAutoExpand(); // Initalize auto-expand feature
@@ -164,7 +170,7 @@
   function initialize() {
     addEventListeners();
 
-    if (window.innerWidth > SMALL_SCREEN_BREAKPOINT) {
+    if (!isSmallScreen()) {
       openNav();
     }
   }
@@ -175,9 +181,11 @@
   // --- New Note Form Function---
 
   function openNewForm() {
+    removeActive();
+
     elements.formContainer.classList.add("open");
     elements.noteContainer.style.display = "none";
-    if (window.innerWidth <= SMALL_SCREEN_BREAKPOINT) {
+    if (isSmallScreen()) {
       closeNav();
     }
   }
@@ -194,20 +202,21 @@
     const formData = new FormData(e.target);
     const title = formData.get("note-title").trim();
     const content = formData.get("note-content").trim();
+    const id = Date.now();
 
-    storeNoteInLS(title, content);
+    storeNoteInLS(id, title, content);
 
-    const newlist = createNoteListEle(title, content);
+    const newlist = createNoteListEle(id, title, content);
     elements.navMenu.appendChild(newlist);
 
     e.target.reset();
-    openNote(title, content);
+    openNote(newlist.childNodes[0], title, content);
   }
 
   // --- localStorage Functions ---
 
-  function storeNoteInLS(title, content) {
-    const newNote = { title, content };
+  function storeNoteInLS(id, title, content) {
+    const newNote = { id, title, content };
 
     const data = JSON.parse(localStorage.getItem("note-data")) || [];
     const newData = [...data, newNote];
@@ -215,23 +224,78 @@
     localStorage.setItem("note-data", JSON.stringify(newData));
   }
 
-  function deleteNoteInLS(title, content) {}
+  function deleteNoteInLS(id) {
+    const data = JSON.parse(localStorage.getItem("note-data")) || [];
+    const newData = data.filter((data) => data.id !== +id);
+
+    localStorage.setItem("note-data", JSON.stringify(newData));
+  }
 
   // --- Note Functions ---
-  function openNote(title, content) {
+  function openNote(targetElement, title, content) {
+    removeActive();
+    targetElement.classList.add("active");
+    targetElement.setAttribute("data-active", true);
     closeNewForm();
     elements.noteTitle.textContent = title.slice(0, 25);
     elements.noteSubTitle.textContent = title;
     elements.noteBody.textContent = content;
+
+    if (isSmallScreen()) {
+      closeNav();
+    }
   }
 
-  function createNoteListEle(title, content) {
+  function deleteNote() {
+    let activeLink, activeLinkId;
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    navLinks.forEach((nav) => {
+      if (nav.dataset.active === "true") {
+        activeLink = nav;
+      }
+    });
+
+    if (activeLink) {
+      const isDelete = window.confirm(
+        "Are you sure you want to delete this note?"
+      );
+      if (isDelete) {
+        activeLinkId = activeLink.dataset.id;
+        deleteNoteInLS(activeLinkId);
+        activeLink.remove();
+
+        elements.noteTitle.textContent = "Note Deleted";
+        elements.noteSubTitle.textContent = "";
+        elements.noteBody.textContent =
+          "You have successfully deleted this note! Navigate to other note via sidebar";
+
+        if (isSmallScreen()) {
+          toggleOptionButtons();
+        }
+      }
+    } else {
+      window.alert("Please select a note to delete!");
+    }
+  }
+
+  function removeActive() {
+    const navLinks = document.querySelectorAll(".nav-link");
+    navLinks.forEach((nav) => {
+      nav.classList.remove("active");
+      nav.setAttribute("data-active", false);
+    });
+  }
+
+  function createNoteListEle(id, title, content) {
     const li = document.createElement("li");
     const a = document.createElement("a");
     a.setAttribute("href", "#");
+    a.setAttribute("data-id", id);
+    a.setAttribute("data-active", false);
     a.classList.add("nav-link");
-    a.textContent = title.slice(0, 10);
-    a.onclick = () => openNote(title, content);
+    a.textContent = title.slice(0, 20);
+    a.onclick = (e) => openNote(e.target, title, content);
 
     li.appendChild(a);
 
@@ -242,7 +306,7 @@
     const data = JSON.parse(localStorage.getItem("note-data")) || [];
 
     data.forEach((data) => {
-      const noteList = createNoteListEle(data.title, data.content);
+      const noteList = createNoteListEle(data.id, data.title, data.content);
       elements.navMenu.appendChild(noteList);
     });
   }

@@ -104,6 +104,11 @@ body {
   display: inline-block;
 }
 
+.nav-link.active {
+  background: var(--color3);
+  color: darkgreen;
+}
+
 .new-btn:hover,
 .nav-link:hover {
   background: var(--color3);
