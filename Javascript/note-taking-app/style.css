@@ -151,7 +151,7 @@ body {
   position: relative;
 }
 
-.note-title {
+.title {
   /* background: var(--color1); */
   padding: 10px 30px 5px;
 
@@ -168,7 +168,7 @@ body {
 }
 
 /* for z-index of child ele(.btn-container) to work. this will visiually added background over child ele */
-.note-title::before {
+.title::before {
   content: "";
   position: absolute;
   top: 0;
@@ -223,6 +223,15 @@ body {
   padding: 10px 30px;
 }
 
+.note-content #sub-title {
+  font-size: 1.2rem;
+  text-decoration: underline;
+}
+
+/* .note-content #note-body{
+
+} */
+
 /* form */
 .form-container {
   display: none;
@@ -238,6 +247,10 @@ body {
   padding-bottom: 20px;
 
   z-index: 10;
+}
+
+.form-container.open {
+  display: block;
 }
 
 .form-title {
@@ -310,7 +323,7 @@ body {
 }
 
 .submit-btn {
-  background-color: #ff9f00;
+  background-color: green;
 }
 
 @media screen and (max-width: 426px) {

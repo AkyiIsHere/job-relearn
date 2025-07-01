@@ -13,10 +13,8 @@
         <nav class="nav" id="nav">
           <h1 class="logo">Note App</h1>
           <button class="new-btn">+ New Note</button>
-          <ul class="nav-menu">
-            <li><a href="#note1" class="nav-link">Note 1</a></li>
-            <li><a href="#note2" class="nav-link">Note 2</a></li>
-            <li><a href="#note3" class="nav-link">Note 3</a></li>
+          <ul class="nav-menu" id="nav-menu">
+            <!-- Dynamic Note List -->
           </ul>
         </nav>
       </div>
@@ -26,74 +24,23 @@
 
       <main class="main" id="main">
         <section class="note-container">
-          <div class="note-title title" id="noteTitle">
-            <h1>Note 1</h1>
+          <div class="title" id="noteTitle">
+            <h1 id="note-title">Note 1</h1>
             <div class="btn-container">
               <button class="edit-btn btn">Edit</button>
               <button class="delete-btn btn">Delete</button>
             </div>
             <button class="burger-btn">&#9776;</button>
           </div>
-          <p class="note-content" id="noteContent">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque,
-            at. Dolores recusandae officiis sapiente incidunt itaque explicabo,
-            voluptas esse, hic totam beatae iusto. Perspiciatis obcaecati, quod
-            at nostrum voluptates perferendis. Lorem ipsum, dolor sit amet
-            consectetur adipisicing elit. Ducimus, minima dolor aliquid expedita
-            molestias maiores eveniet voluptates necessitatibus, vero esse
-            dignissimos laudantium. Quo, esse minima a libero nemo possimus
-            placeat expedita, dicta dolore quibusdam consectetur accusantium sit
-            praesentium consequuntur molestias. Aspernatur perferendis porro nam
-            corrupti distinctio placeat odit, blanditiis consectetur id in quos
-            dolores incidunt harum, voluptatibus consequuntur? Maxime animi
-            ratione architecto ullam recusandae praesentium, aspernatur
-            obcaecati et, voluptas dolore ex perspiciatis! Distinctio eveniet
-            enim mollitia aperiam consequuntur eaque sequi? Quis inventore,
-            praesentium nisi veniam ipsum, iure iusto optio eligendi itaque eius
-            nam odit exercitationem sunt voluptatibus soluta fuga reprehenderit.
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde
-            laudantium blanditiis saepe culpa veritatis nam vero illo, dolorem
-            necessitatibus iusto earum iste et at quibusdam perferendis modi
-            assumenda, id, quo repellat maiores? Magni, maiores at animi labore
-            unde ipsum numquam pariatur sapiente adipisci! Molestiae dolor nulla
-            asperiores officia consectetur sed animi assumenda, pariatur ab quod
-            accusamus aspernatur nesciunt tenetur deleniti laboriosam dolore
-            ullam voluptatibus a, recusandae illum ratione earum autem. Quos
-            enim deleniti ipsum est consequuntur quis voluptatum impedit nemo ex
-            reprehenderit ratione odio hic deserunt beatae, officia assumenda
-            sapiente molestias. Obcaecati dignissimos odio ipsam expedita nisi
-            vero totam laboriosam. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Cum, officiis ducimus. Amet eveniet molestias
-            mollitia similique repellat dolorum vitae animi iure. Eligendi rerum
-            eum quaerat soluta nobis alias numquam saepe voluptatem quisquam
-            reprehenderit, modi inventore sint tenetur! Dolores ex amet
-            distinctio porro molestias, debitis nemo, modi obcaecati non totam
-            beatae, asperiores facilis assumenda! Soluta sequi iure voluptate
-            doloremque tempora excepturi necessitatibus laboriosam explicabo
-            facere saepe laborum laudantium cupiditate placeat corporis
-            perspiciatis possimus magnam ea dolores quaerat facilis quo
-            expedita, officiis non. Eius, quaerat dolor. Minima ut atque
-            molestias adipisci, harum quam esse ad recusandae asperiores
-            impedit? Aperiam adipisci iure doloremque quaerat ullam consequatur
-            laborum maxime sequi eius omnis odio numquam aut repellat quasi
-            consequuntur quas aspernatur accusamus culpa, nesciunt reprehenderit
-            at, dicta fugiat quibusdam! Porro optio perferendis minima ad.
-            Nesciunt excepturi soluta doloribus aliquam! Optio reiciendis
-            repudiandae, voluptatem voluptates quis, necessitatibus quidem et
-            voluptatum, vero in laboriosam dignissimos eos corrupti sapiente.
-            Delectus, praesentium provident temporibus mollitia molestiae
-            necessitatibus ea laboriosam voluptate ex molestias voluptatem
-            eveniet, culpa tempora perferendis nostrum. Fugiat, soluta. Harum
-            atque praesentium quo ipsam! Accusamus rem animi iure sit
-            consequuntur minima asperiores obcaecati illo itaque iste debitis
-            cumque ex neque ad impedit, nihil aliquid odio alias nesciunt
-            beatae.
-          </p>
+          <div class="note-content" id="note-content">
+            <h2 id="sub-title">Hello</h2>
+            <p id="note-body">Body</p>
+          </div>
         </section>
         <!-- note form -->
         <div class="form-container">
           <h2 class="form-title title">New Note</h2>
-          <form action="">
+          <form action="" id="note-form">
             <div class="form-control">
               <label>Title</label>
               <input
@@ -118,7 +65,7 @@
               <button type="button" class="btn cancel-btn" id="cancel-btn">
                 Cancel
               </button>
-              <button type="submit" class="btn submit-btn" id="submit-btn">
+              <button type="submit" class="btn submit-btn" id="create-btn">
                 Add Note
               </button>
             </div>
