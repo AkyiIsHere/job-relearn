@@ -32,7 +32,7 @@
             </div>
             <button class="burger-btn">&#9776;</button>
           </div>
-          <div class="note-content" id="note-content">
+          <div class="note-content" id="note-content-container">
             <h2 id="sub-title">Add New Note</h2>
             <p id="note-body">
               Click new note button in sidebar to create new note.
@@ -50,6 +50,7 @@
                 name="note-title"
                 id="note-title-input"
                 placeholder="Note title..."
+                autocomplete="off"
                 required
               />
             </div>
@@ -67,7 +68,7 @@
               <button type="button" class="btn cancel-btn" id="cancel-btn">
                 Cancel
               </button>
-              <button type="submit" class="btn submit-btn" id="create-btn">
+              <button type="submit" class="btn submit-btn" id="submit-btn">
                 Add Note
               </button>
             </div>

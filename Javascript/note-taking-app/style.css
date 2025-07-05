@@ -13,6 +13,11 @@
   padding: 0;
 }
 
+html {
+  font-size: 62.5%; /* 10px */
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 body {
   background-color: var(--color1);
   color: white;
@@ -32,7 +37,7 @@ body {
 
   transition: flex 600ms;
 
-  z-index: 10;
+  z-index: 11;
 }
 
 .nav-container.active {
@@ -61,7 +66,7 @@ body {
 }
 
 .logo {
-  font-size: 1.8rem;
+  font-size: 2.6rem;
   text-align: center;
   margin-bottom: 10px;
 }
@@ -73,6 +78,7 @@ body {
   background: var(--color1);
   color: white;
 
+  font-size: 1.4rem;
   text-decoration: none;
   text-align: center;
   line-height: 32px;
@@ -85,6 +91,12 @@ body {
 
 .nav-menu {
   list-style-type: none;
+  /* border: 1px solid vasr(--color4); */
+
+  /* Add these properties for the scrollbox */
+  max-height: calc(100vh - 155px); /* Adjust this value as needed */
+  overflow-y: auto; /* Adds scrollbar only when content overflows vertically */
+  padding-right: 5px; /* Add some padding to prevent content from touching the scrollbar */
 }
 
 .nav-link {
@@ -93,6 +105,7 @@ body {
   background: var(--color1);
   color: white;
 
+  font-size: 1.3rem;
   text-decoration: none;
   text-align: center;
   line-height: 30px;
@@ -158,14 +171,15 @@ body {
 
 .title {
   /* background: var(--color1); */
-  padding: 10px 30px 5px;
+  font-size: 1.6rem;
+  padding: 15px 30px;
 
   /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3); */
 
   position: sticky;
   top: 0;
 
-  z-index: 10;
+  /* z-index: 10; */
 
   display: flex;
   justify-content: space-between;
@@ -216,21 +230,53 @@ body {
 }
 
 .edit-btn {
-  /* background: #ff9f00; */
-  background: var(--color2);
+  background: #ff9f00;
+  /* background: var(--color2); */
 }
 
 .delete-btn {
   background: #cb0404;
 }
 
-.note-content {
+/* .note-content {
   padding: 10px 30px;
 }
 
 .note-content #sub-title {
   font-size: 1.2rem;
   text-decoration: underline;
+} */
+
+.note-content {
+  padding: 10px 30px;
+  max-height: calc(
+    100vh - 120px
+  ); /* Adjust this value as needed based on header/footer heights */
+  overflow-y: auto;
+  /* Add scrollbar styling if you want custom scrollbars for this section as well */
+  /*
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #666;
+    border-radius: 4px;
+  }
+  */
+}
+
+.note-content #sub-title {
+  font-size: 1.8rem;
+  text-decoration: underline;
+  margin-bottom: 10px; /* Add some space below the subtitle */
+}
+
+/* Make sure note-body itself doesn't have an overflowing effect */
+.note-content #note-body {
+  font-size: 1.5rem;
+  /* You might not need specific styles here, it will just fill its parent */
+  white-space: pre-wrap; /* Ensures line breaks in content are respected */
+  word-wrap: break-word; /* Ensures long words break to prevent horizontal overflow */
 }
 
 /* .note-content #note-body{
@@ -290,6 +336,7 @@ body {
 
   padding: 4px 8px;
   border: none;
+  outline: none;
   border-radius: 4px;
 }
 
@@ -298,7 +345,6 @@ body {
   border: 2px solid #ccc;
   border-radius: 8px;
   resize: none; /* options: none, both, horizontal, vertical */
-  outline: none;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   transition: border-color 0.3s, box-shadow 0.3s;
   overflow: hidden;
@@ -327,6 +373,10 @@ body {
   background-color: #cb0404;
 }
 
+.update-btn {
+  background-color: slateblue;
+}
+
 .submit-btn {
   background-color: green;
 }
@@ -337,11 +387,12 @@ body {
     left: 0;
     top: 0;
 
-    width: 100vw;
+    width: 0;
     max-width: none;
   }
 
   .nav-container.active {
+    width: 100vw;
     background: rgba(0, 0, 0, 0.3);
   }
 
@@ -352,7 +403,19 @@ body {
 
   .main {
     flex: 1 1 100%;
-    font-size: 0.85rem;
+    /* font-size: 1rem; */
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .note-content #sub-title {
+    font-size: 1.6rem;
+  }
+
+  .note-content #note-body {
+    font-size: 1.2rem;
   }
 
   .logo {
@@ -360,6 +423,7 @@ body {
   }
 
   .burger-btn {
+    font-size: 1.8rem;
     display: block;
     cursor: pointer;
   }
@@ -391,6 +455,34 @@ body {
   }
 
   .btn {
-    font-size: 0.75rem;
+    font-size: 1.2rem;
   }
 }
+
+/* Target the scrollbar itself */
+::-webkit-scrollbar {
+  width: 10px; /* Adjust the width for vertical scrollbars */
+  height: 10px; /* Adjust the height for horizontal scrollbars */
+}
+
+/* Track: the background of the scrollbar */
+::-webkit-scrollbar-track {
+  background: var(--color1); /* Example: a lighter background */
+  border-radius: 5px; /* Slightly rounded corners for the track */
+}
+
+/* Thumb: the draggable part of the scrollbar */
+::-webkit-scrollbar-thumb {
+  background: var(--color3); /* Example: a darker color for the thumb */
+  border-radius: 5px; /* Rounded corners for the thumb */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color4); /* Lighter color when hovered */
+}
+
+/* Corner: the bottom-right corner where vertical and horizontal scrollbars meet */
+/* ::-webkit-scrollbar-corner { */
+/* background: transparent; Often left transparent */
+/* } */

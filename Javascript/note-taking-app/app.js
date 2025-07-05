@@ -1,313 +1,334 @@
 // -- IIFE (Immediate Invoke Function Expressin) to avoid global population and improve encapsulation
-
 (function () {
+  // --- CONFIG & CONSTANTS ---
+  const config = {
+    STORAGE_KEY: "note-data",
+    SMALL_SCREEN_BREAKPOINT: 426, // Breakpoint for small screens
+    AUTO_EXPAND_MIN_HEIGHT: 200, // min height for auto-expand textareas
+    ACTIVE_CLASS: "active",
+    OPEN_CLASS: "open",
+  };
+
   // --- DOM Element Selections ---
   const elements = {
-    menuBtn: document.getElementById("menuBtn"),
+    //SideNav
     navContainer: document.querySelector(".nav-container"),
     nav: document.getElementById("nav"),
     navMenu: document.getElementById("nav-menu"),
+    menuBtn: document.getElementById("menuBtn"),
     arrIcon: document.querySelector(".arr-icon"),
-    burgerBtn: document.querySelector(".burger-btn"),
-    btnContainer: document.querySelector(".btn-container"),
-    autoExpandInputs: document.querySelectorAll(".auto-expand"),
+
+    // Main Content
     noteContainer: document.querySelector(".note-container"),
-    newBtn: document.querySelector(".new-btn"),
-    cancelBtn: document.getElementById("cancel-btn"),
-    createBtn: document.getElementById("create-btn"),
-    formContainer: document.querySelector(".form-container"),
-    form: document.querySelector("#note-form"),
     noteTitle: document.getElementById("note-title"),
     noteSubTitle: document.getElementById("sub-title"),
     noteBody: document.getElementById("note-body"),
+
+    //Form
+    formContainer: document.querySelector(".form-container"),
+    form: document.querySelector("#note-form"),
+    titleInput: document.getElementById("note-title-input"),
+    contentInput: document.getElementById("note-content-input"),
+    autoExpandInputs: document.querySelectorAll(".auto-expand"),
+
+    //FormBtn
+    submitBtn: document.getElementById("submit-btn"),
+    cancelBtn: document.getElementById("cancel-btn"),
+
+    //Note Btn
+    newBtn: document.querySelector(".new-btn"),
     noteEditBtn: document.getElementById("note-edit"),
     noteDeleteBtn: document.getElementById("note-delete"),
+
+    burgerBtn: document.querySelector(".burger-btn"),
+    btnContainer: document.querySelector(".btn-container"),
   };
 
-  // --- Constants ---
-  const SMALL_SCREEN_BREAKPOINT = 426; // Breakpoint for small screens
-  const AUTO_EXPAND_MIN_HEIGHT = 200; // min height for auto-expand textareas
+  // --- STATE MANAGEMENT ---
+  // The single source of truth for the application
+  const state = {
+    notes: [],
+    activeNodeId: null,
+    isNavOpen: !isSmallScreen(),
+    isBurgerOpen: false,
+    isFormVisible: false,
+    isEditing: false,
+  };
 
-  // -- Utility Functions ---
+  // --- LOCALSTORAGE API ---
+  const storageAPI = {
+    getAll: () => JSON.parse(localStorage.getItem(config.STORAGE_KEY)) || [],
+    saveAll: (notes) =>
+      localStorage.setItem(config.STORAGE_KEY, JSON.stringify(notes)),
+  };
 
+  // -- UTILITY FUNCTIONS ---
   /**
-   * Executes a callback function when a CSS transition ends on the element.
-   * @param {HTMLElement} element - The DOM element to observe.
-   * @param {Function} callback - The function to execute after the transition.
+   * Checks whether the screen size is small or not.
+   * @returns - Boolean.
    */
-  function onTransitionEnd(element, callback) {
-    function handler(event) {
-      if (event.target === element) {
-        callback(event);
-        element.removeEventListener("transitionend", handler);
-      }
-    }
-    element.addEventListener("transitionend", handler);
-  }
-
-  /**
-   * Manages adding or remove a class fro multiple elements.
-   * @param {HTMLElement[]} elementsArray - An array of elements
-   * @param {string} className - The class name to toggle
-   * @param {boolean} add - True to add the class, false to remove
-   */
-  function toggleClasses(elementsArray, className, add) {
-    elementsArray.forEach((el) => {
-      if (add) {
-        el.classList.add(className);
-      } else {
-        el.classList.remove(className);
-      }
-    });
-  }
-
   function isSmallScreen() {
-    return window.innerWidth <= SMALL_SCREEN_BREAKPOINT;
+    return window.innerWidth <= config.SMALL_SCREEN_BREAKPOINT;
   }
 
-  // --- Navigation Functions ---
+  /**
+   * Toggles a class on an element.
+   * @param {HTMLElement} el - The element.
+   * @param {string} className - The class to toggle.
+   * @param {boolean} className - Optional. If true, adds the class; if false, removes it.
+   */
+  const toggleClass = (el, className, force) =>
+    el?.classList.toggle(className, force);
 
-  function toggleNav(e) {
-    elements.nav.classList.contains("active") ? closeNav() : openNav();
-  }
+  // --- RENDER FUNCTION ---
+  // Updates the entire UI based on the current state
+  const render = () => {
+    //Render navigation
+    toggleClass(elements.navContainer, config.ACTIVE_CLASS, state.isNavOpen);
+    toggleClass(elements.nav, config.ACTIVE_CLASS, state.isNavOpen);
+    toggleClass(elements.arrIcon, config.ACTIVE_CLASS, state.isNavOpen);
+    elements.menuBtn.style.left = state.isNavOpen
+      ? `${elements.nav.offsetWidth}px`
+      : "0";
 
-  function openNav() {
-    const navWidth = elements.nav.offsetWidth;
-
-    toggleClasses(
-      [elements.navContainer, elements.nav, elements.arrIcon],
-      "active",
-      true
-    );
-    elements.menuBtn.style.left = `${navWidth}px`;
-    elements.navContainer.style.zIndex = "11";
-
-    document.addEventListener("click", closeNavHandler);
-  }
-
-  function closeNav() {
-    toggleClasses(
-      [elements.navContainer, elements.nav, elements.arrIcon],
-      "active",
-      false
-    );
-    elements.menuBtn.style.left = "0";
-
-    document.removeEventListener("click", closeNavHandler);
-    onTransitionEnd(elements.navContainer, () => {
-      elements.navContainer.style.zIndex = "-10";
+    //Render note list
+    elements.navMenu.textContent = ""; // Clear existing list
+    state.notes.forEach((note) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = "#";
+      a.dataset.id = note.id;
+      a.className = "nav-link";
+      a.textContent = isSmallScreen()
+        ? note.title.slice(0, 10)
+        : note.title.slice(0, 20);
+      if (note.id === state.activeNodeId) {
+        a.classList.add(config.ACTIVE_CLASS);
+      }
+      li.appendChild(a);
+      elements.navMenu.appendChild(li);
     });
-  }
 
-  function closeNavHandler(e) {
-    // const isSmallScreen = window.innerWidth <= SMALL_SCREEN_BREAKPOINT;
+    // Render active note display
+    const activeNote = state.notes.find(
+      (note) => note.id === state.activeNodeId
+    );
+
+    if (activeNote) {
+      const title = isSmallScreen()
+        ? activeNote.title.slice(0, 20)
+        : state.isNavOpen
+        ? activeNote.title.slice(0, 24)
+        : activeNote.title.slice(0, 90);
+      elements.noteTitle.textContent = title;
+      elements.noteSubTitle.textContent = activeNote.title;
+      elements.noteBody.textContent = activeNote.content;
+    } else {
+      elements.noteTitle.textContent = "Welcome";
+      elements.noteSubTitle.textContent = "No note selected";
+      elements.noteBody.textContent =
+        "Select a note from the sidebar or create a new one.";
+    }
+
+    // Render Form visibility and state
+    toggleClass(elements.formContainer, config.OPEN_CLASS, state.isFormVisible);
+    elements.noteContainer.style.display = state.isFormVisible
+      ? "none"
+      : "block";
+    toggleClass(elements.submitBtn, "update-btn", state.isEditing);
+    toggleClass(elements.updateBtn, "submit-btn", !state.isEditing);
+    elements.submitBtn.textContent = state.isEditing
+      ? "Update Note"
+      : "Add Note";
+
+    // Render Burger Btn
+    toggleClass(elements.btnContainer, config.ACTIVE_CLASS, state.isBurgerOpen);
+  };
+
+  // --- ACTIONS & EVENT HANDLERS ---
+
+  const setNavOpen = (isOpen) => {
+    state.isNavOpen = isOpen;
+    render();
+    // console.log("setNavOpen");
+
+    state.isNavOpen
+      ? document.addEventListener("click", clickOutsideHandler)
+      : document.removeEventListener("click", clickOutsideHandler);
+  };
+
+  const clickOutsideHandler = (e) => {
     const clickedOutside =
       !elements.nav.contains(e.target) &&
       e.target !== elements.menuBtn &&
       e.target !== elements.arrIcon;
 
     if (isSmallScreen() && clickedOutside) {
-      closeNav();
+      setNavOpen(!state.isNavOpen);
     }
-  }
+  };
 
-  // --- Option Buttons Functions ---
+  const setBurgerOpen = (isOpen) => {
+    if (isSmallScreen()) {
+      state.isBurgerOpen = isOpen;
+      render();
 
-  function toggleOptionButtons() {
-    const isActive = elements.btnContainer.classList.toggle("active");
-
-    if (isActive) {
-      onTransitionEnd(elements.btnContainer, (event) => {
-        event.target.style.zIndex = "11";
-      });
-      document.addEventListener("click", closeOptionHandler);
-    } else {
-      elements.btnContainer.style.zIndex = "-11";
-      document.removeEventListener("click", closeOptionHandler);
+      state.isBurgerOpen
+        ? document.addEventListener("click", closeBrugerHandler)
+        : document.removeEventListener("click", closeBrugerHandler);
     }
-  }
+  };
 
-  function closeOptionHandler(e) {
+  const closeBrugerHandler = (e) => {
     const clickedOutside =
       !elements.btnContainer.contains(e.target) &&
       e.target !== elements.burgerBtn;
 
-    if (clickedOutside) {
-      toggleOptionButtons();
+    if (clickedOutside && !state.isNavOpen) {
+      setBurgerOpen(false);
     }
-  }
+  };
 
-  // --- Auto Expand Feature ---
+  const handleNavClick = (e) => {
+    e.stopPropagation();
+    const link = e.target.closest(".nav-link");
 
-  function setupAutoExpand() {
+    if (link) {
+      e.preventDefault();
+      state.activeNodeId = Number(link.dataset.id);
+      state.isFormVisible = false;
+      state.isBurgerOpen = false;
+
+      if (isSmallScreen()) {
+        state.isNavOpen = false;
+      }
+    }
+
+    render();
+  };
+
+  const openForm = (isEditing = false, note = null) => {
+    state.isFormVisible = true;
+    state.isEditing = isEditing;
+    !isEditing && (state.activeNodeId = null);
+
+    if (isEditing && note) {
+      elements.titleInput.value = note.title;
+      elements.contentInput.value = note.content;
+      //cause scrollHeight can be calculated after rendering
+      // elements.contentInput.style.height =
+      //   elements.contentInput.scrollHeight + "px";
+    } else {
+      elements.form.reset();
+      elements.contentInput.style.height = config.AUTO_EXPAND_MIN_HEIGHT + "px";
+    }
+
+    if (isSmallScreen()) {
+      state.isNavOpen = false;
+    }
+
+    render();
+
+    // Auto-expand textarea after render
+    // Setting height: auto; acts as a crucial "reset" or "unconstrain" step that forces the browser to re-evaluate and accurately calculate the scrollHeight based purely on the content, allowing it to shrink
+    setTimeout(() => {
+      elements.contentInput.style.height = config.AUTO_EXPAND_MIN_HEIGHT + "px";
+      elements.contentInput.style.height = `${elements.contentInput.scrollHeight}px`;
+    }, 0);
+  };
+
+  const closeForm = () => {
+    state.isFormVisible = false;
+    render();
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    const noteForm = new FormData(e.target);
+    const title = noteForm.get("note-title").trim();
+    const content = noteForm.get("note-content").trim();
+
+    if (state.isEditing) {
+      //Updaet existing note
+      const noteIndex = state.notes.findIndex(
+        (n) => n.id === state.activeNodeId
+      );
+      if (noteIndex > -1) {
+        state.notes[noteIndex] = { ...state.notes[noteIndex], title, content };
+      }
+    } else {
+      const newNote = { id: Date.now(), title, content };
+      state.notes.push(newNote);
+      state.activeNodeId = newNote.id;
+    }
+
+    storageAPI.saveAll(state.notes);
+    closeForm();
+  };
+
+  const handleEditClick = () => {
+    if (!state.activeNodeId) {
+      alert("Please select a note to edit.");
+      return;
+    }
+    const noteToEdit = state.notes.find((n) => n.id === state.activeNodeId);
+    openForm((isEditing = true), noteToEdit);
+  };
+
+  const handleDeleteClick = () => {
+    if (!state.activeNodeId) {
+      alert("Please select a note to delete.");
+      return;
+    }
+    if (confirm("Are you sure you want to delete this note?")) {
+      state.notes = state.notes.filter((n) => n.id !== state.activeNodeId);
+      state.activeNodeId = state.notes.length > 0 ? state.notes[0].id : null;
+      storageAPI.saveAll(state.notes);
+      render();
+    }
+  };
+
+  // --- auto expand feature ---
+  const setupAutoExpand = () => {
     elements.autoExpandInputs.forEach((input) => {
       input.addEventListener("input", () => {
-        input.style.height = `${AUTO_EXPAND_MIN_HEIGHT}px`; //Reset height to min before chekcing scrollheight
-        if (input.scrollHeight >= AUTO_EXPAND_MIN_HEIGHT) {
-          input.style.height = "auto";
-          input.style.height = input.scrollHeight + "px";
+        input.style.height = `${config.AUTO_EXPAND_MIN_HEIGHT}px`;
+        if (input.scrollHeight >= config.AUTO_EXPAND_MIN_HEIGHT) {
+          input.style.height = `${input.scrollHeight}px`;
         }
       });
     });
-  }
+  };
 
-  // --- Event Listeners ---
+  // --- EVENT LISTENERS ---
 
-  function addEventListeners() {
-    elements.menuBtn.addEventListener("click", toggleNav);
-    elements.burgerBtn.addEventListener("click", toggleOptionButtons);
-    elements.newBtn.addEventListener("click", openNewForm);
-    elements.cancelBtn.addEventListener("click", closeNewForm);
-    elements.form.addEventListener("submit", noteFormSubmit);
-    elements.noteDeleteBtn.addEventListener("click", deleteNote);
+  const addEventListeners = () => {
+    elements.menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setNavOpen(!state.isNavOpen);
+    });
+    elements.newBtn.addEventListener("click", () => openForm());
+    elements.cancelBtn.addEventListener("click", closeForm);
+    elements.form.addEventListener("submit", handleFormSubmit);
+    elements.noteEditBtn.addEventListener("click", handleEditClick);
+    elements.noteDeleteBtn.addEventListener("click", handleDeleteClick);
+    elements.navMenu.addEventListener("click", handleNavClick);
+    elements.burgerBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setBurgerOpen(!state.isBurgerOpen);
+    });
+  };
 
-    noteListInitialization(); // Initalize note lists from localstorage
-    setupAutoExpand(); // Initalize auto-expand feature
-  }
-
-  // --- Initialization ---
-
-  function initialize() {
+  function init() {
     addEventListeners();
-
-    if (!isSmallScreen()) {
-      openNav();
+    setupAutoExpand();
+    state.notes = storageAPI.getAll();
+    if (state.notes.length > 0) {
+      state.activeNodeId = state.notes[0].id;
     }
+    // document.addEventListener("click", (e) => console.log(e.target));
+    render();
   }
-
-  // Run the initialization
-  initialize();
-
-  // --- New Note Form Function---
-
-  function openNewForm() {
-    removeActive();
-
-    elements.formContainer.classList.add("open");
-    elements.noteContainer.style.display = "none";
-    if (isSmallScreen()) {
-      closeNav();
-    }
-  }
-
-  function closeNewForm() {
-    if (elements.formContainer.classList.contains("open")) {
-      elements.formContainer.classList.remove("open");
-      elements.noteContainer.style.display = "block";
-    }
-  }
-
-  function noteFormSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const title = formData.get("note-title").trim();
-    const content = formData.get("note-content").trim();
-    const id = Date.now();
-
-    storeNoteInLS(id, title, content);
-
-    const newlist = createNoteListEle(id, title, content);
-    elements.navMenu.appendChild(newlist);
-
-    e.target.reset();
-    openNote(newlist.childNodes[0], title, content);
-  }
-
-  // --- localStorage Functions ---
-
-  function storeNoteInLS(id, title, content) {
-    const newNote = { id, title, content };
-
-    const data = JSON.parse(localStorage.getItem("note-data")) || [];
-    const newData = [...data, newNote];
-
-    localStorage.setItem("note-data", JSON.stringify(newData));
-  }
-
-  function deleteNoteInLS(id) {
-    const data = JSON.parse(localStorage.getItem("note-data")) || [];
-    const newData = data.filter((data) => data.id !== +id);
-
-    localStorage.setItem("note-data", JSON.stringify(newData));
-  }
-
-  // --- Note Functions ---
-  function openNote(targetElement, title, content) {
-    removeActive();
-    targetElement.classList.add("active");
-    targetElement.setAttribute("data-active", true);
-    closeNewForm();
-    elements.noteTitle.textContent = title.slice(0, 25);
-    elements.noteSubTitle.textContent = title;
-    elements.noteBody.textContent = content;
-
-    if (isSmallScreen()) {
-      closeNav();
-    }
-  }
-
-  function deleteNote() {
-    let activeLink, activeLinkId;
-    const navLinks = document.querySelectorAll(".nav-link");
-
-    navLinks.forEach((nav) => {
-      if (nav.dataset.active === "true") {
-        activeLink = nav;
-      }
-    });
-
-    if (activeLink) {
-      const isDelete = window.confirm(
-        "Are you sure you want to delete this note?"
-      );
-      if (isDelete) {
-        activeLinkId = activeLink.dataset.id;
-        deleteNoteInLS(activeLinkId);
-        activeLink.remove();
-
-        elements.noteTitle.textContent = "Note Deleted";
-        elements.noteSubTitle.textContent = "";
-        elements.noteBody.textContent =
-          "You have successfully deleted this note! Navigate to other note via sidebar";
-
-        if (isSmallScreen()) {
-          toggleOptionButtons();
-        }
-      }
-    } else {
-      window.alert("Please select a note to delete!");
-    }
-  }
-
-  function removeActive() {
-    const navLinks = document.querySelectorAll(".nav-link");
-    navLinks.forEach((nav) => {
-      nav.classList.remove("active");
-      nav.setAttribute("data-active", false);
-    });
-  }
-
-  function createNoteListEle(id, title, content) {
-    const li = document.createElement("li");
-    const a = document.createElement("a");
-    a.setAttribute("href", "#");
-    a.setAttribute("data-id", id);
-    a.setAttribute("data-active", false);
-    a.classList.add("nav-link");
-    a.textContent = title.slice(0, 20);
-    a.onclick = (e) => openNote(e.target, title, content);
-
-    li.appendChild(a);
-
-    return li;
-  }
-
-  function noteListInitialization() {
-    const data = JSON.parse(localStorage.getItem("note-data")) || [];
-
-    data.forEach((data) => {
-      const noteList = createNoteListEle(data.id, data.title, data.content);
-      elements.navMenu.appendChild(noteList);
-    });
-  }
+  init();
 })();
